@@ -4,20 +4,28 @@ var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var Editor = require('editor');
 var S = KISSY;
 var Node = require('node');
+var SP = require('../smartPath/smartPath');
+var IO = require('io');
 module.exports = {
-    init:function(){
-        S.log('article init');
-        var html = new XTemplate(tpl).render({
-            title:'this is writeStory3',
-            content:'render by kg/xtemplate'
+    init: function () {
+        var submitForm = new Node('<form>').prop({
+            action: SP.resolvedPath('writeStory/submitNew'),
+            method: 'post'
         });
         var editorContainer = new Node('<div>');
-        var editorNode = new Node('<textarea>');
-        $('article').append(editorContainer.append(editorNode));
-        var cfg ={
-            fromTextarea:editorNode,
+        var submitButton = new Node('<input>').prop({
+            type: 'button',
+            value: '发表'
+        });
+        var contentHidden = new Node('<input>').prop({
+            type: 'hidden',
+            name: 'content'
+        });
+        $('article').append(editorContainer).append(submitForm.append(contentHidden)).append(submitButton);
+        var cfg = {
             focused: true,
             attachForm: true,
+            render: editorContainer,
             baseZIndex: 10000
             // customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
             // customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
@@ -199,9 +207,16 @@ module.exports = {
 
             window.newEditor = editor;
 
-//            editor.on('paste', function () {
-//                return 'x';
-//            });
+            submitButton.on('click', function (e) {
+                //editor.setData('<p>s</p>');
+                //console.log(editor.getData());
+                //var form_ = $('article').all("form")[0];
+                var form_ = submitForm.getDOMNode();
+                contentHidden.getDOMNode().value = editor.getData();
+                console.log(contentHidden.getDOMNode().value);
+                form_.submit();
+            });
+
         });
     }
 }

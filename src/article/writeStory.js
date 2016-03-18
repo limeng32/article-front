@@ -16,12 +16,18 @@ module.exports = {
         var submitButton = new Node('<input>').prop({
             type: 'button',
             value: '发表'
-        });
+        }).addClass('ks-button ks-button-danger ks-button-shown signButton submitButton');
+        var submitButtonContainer = new Node('<div>').addClass('submitButtonContainer');
         var contentHidden = new Node('<input>').prop({
             type: 'hidden',
             name: 'content'
         });
-        $('article').append(editorContainer).append(submitForm.append(contentHidden)).append(submitButton);
+        $('article').append(editorContainer);
+        if (auth == null || auth < 5) {
+            $('article').append(submitForm.append(contentHidden)).append(submitButtonContainer.append('请您先登录或者注册'));
+        }else{
+            $('article').append(submitForm.append(contentHidden)).append(submitButtonContainer.append(submitButton));
+        }
         var cfg = {
             focused: true,
             attachForm: true,

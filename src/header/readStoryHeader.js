@@ -1,6 +1,6 @@
 var $ = require('node').all;
 module.exports = {
     init:function(){
-        $('header').html('this is header');
+        $('header').html('this is 中文');
     }
 }

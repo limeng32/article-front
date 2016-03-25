@@ -6,38 +6,74 @@ var S = KISSY;
 var Node = require('node');
 var SP = require('../smartPath/smartPath');
 var IO = require('io');
+var Auth = require('kg/auth/2.0.6/');
+var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
 module.exports = {
     init: function () {
         var submitForm = new Node('<form>').prop({
             action: SP.resolvedPath('writeStory/submitNew'),
             method: 'post'
         });
-        var editorContainer = new Node('<div>');
+        var editorContainer = new Node('<div>').addClass('editorContainer');
         var submitButton = new Node('<input>').prop({
-            type: 'button',
+            type: 'submit',
             value: '发表'
-        }).addClass('ks-button ks-button-danger ks-button-shown signButton submitButton');
+        }).addClass('ks-button ks-button-info ks-button-shown signButton submitButton');
         var submitButtonContainer = new Node('<div>').addClass('submitButtonContainer');
+        var titleContainer = new Node('<div').addClass('titleContainer');
+        var titleNode = new Node('<input>').prop({
+            type: 'text',
+            name: 'title'
+        }).attr('min-len-title', '6').attr('max-len-title', '50').addClass('titleNode');
+        var titleText = new Node('<span>').html('标题：').addClass('titleText');
+        titleContainer.append(titleText).append(titleNode);
         var contentHidden = new Node('<input>').prop({
             type: 'hidden',
             name: 'content'
-        });
-        $('article').append(editorContainer);
+        }).attr('min-len-content', '20').attr('max-len-content', '32000');
+        var contentHiddenContainer = new Node('<div');
+        $('article').append(submitForm.append(titleContainer).append(editorContainer));
         if (auth == null || auth < 5) {
-            $('article').append(submitForm.append(contentHidden)).append(submitButtonContainer.append('请您先登录或者注册'));
-        }else{
-            $('article').append(submitForm.append(contentHidden)).append(submitButtonContainer.append(submitButton));
+            $('article').append(submitButtonContainer.append('请您先').
+                append(new Node('<a>').prop({
+                    href: SP.resolvedPath('signIn')
+                }).append('登录')).append('或者').
+                append(new Node('<a>').prop({
+                    href: SP.resolvedPath('signUp')
+                }).append('注册')));
+        } else {
+            submitForm.append(submitButtonContainer.append(submitButton));
         }
+        submitForm.append(contentHiddenContainer.append(contentHidden));
+        var formAuth = new Auth(submitForm);
+        formAuth.plug(new AuthMsgs());
+        formAuth.register('min-len-content', function (value, attr, defer, field) {
+            var min = Number(attr);
+            this.msg('error', '请您输入的内容过少，无法提交');
+            return value.length >= Number(attr);
+        }).register('max-len-content', function (value, attr, defer, field) {
+            var max = Number(attr);
+            this.msg('error', '请您输入的内容过多，无法提交');
+            return value.length <= Number(attr);
+        }).register('min-len-title', function (value, attr, defer, field) {
+            var min = Number(attr);
+            this.msg('error', '标题不能少于' + min + '个字');
+            return value.length >= Number(attr);
+        }).register('max-len-title', function (value, attr, defer, field) {
+            var max = Number(attr);
+            this.msg('error', '标题不能多于' + max + '个字');
+            return value.length <= Number(attr);
+        });
         var cfg = {
             focused: true,
             attachForm: true,
             render: editorContainer,
+            height: 400,
             baseZIndex: 10000
-            // customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
             // customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
         };
-        var plugins = ("source-area" +
-        ",code" +
+        var plugins = (
+        "code" +
         ",separator" +
         ",bold" +
         ",italic," +
@@ -45,8 +81,7 @@ module.exports = {
         "font-size," +
         "strike-through," +
         "underline," +
-        "separator," +
-        "checkbox-source-area" +
+        "separator" +
         ",image" +
         ",link" +
         ",fore-color" +
@@ -201,28 +236,28 @@ module.exports = {
                 editor = new Editor(cfg);
                 editor.render();
             }
+            formAuth.render();
             editor.on("blur", function () {
-                S.log("editor blur");
+                contentHidden.getDOMNode().value = editor.getData();
             });
             editor.on("focus", function () {
-                S.log("editor focus");
+                formAuth.getField('content').get('msg').hide();
             });
             editor.on("selectionChange", function (e) {
-                S.log("selectionChange : " + e.path.toString());
             });
-
             window.newEditor = editor;
-
-            submitButton.on('click', function (e) {
-                //editor.setData('<p>s</p>');
-                //console.log(editor.getData());
-                //var form_ = $('article').all("form")[0];
-                var form_ = submitForm.getDOMNode();
-                contentHidden.getDOMNode().value = editor.getData();
-                console.log(contentHidden.getDOMNode().value);
-                form_.submit();
+            //submitButton.on('click', function (e) {
+            //    //editor.setData('<p>s</p>');
+            //    //console.log(editor.getData());
+            //    //var form_ = $('article').all("form")[0];
+            //    var form_ = submitForm.getDOMNode();
+            //    contentHidden.getDOMNode().value = editor.getData();
+            //    //console.log(contentHidden.getDOMNode().value);
+            //    form_.submit();
+            //});
+            submitButton.on("click", function () {
+                contentHiddenContainer.show();
             });
-
         });
     }
 }

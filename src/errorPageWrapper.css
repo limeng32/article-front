@@ -1,7 +1,3 @@
-body {
-  font-family: 'Microsoft YaHei';
-  font-size: larger;
-}
 header {
   background-color: #149BAD;
   color: #fff;
@@ -44,27 +40,13 @@ body {
   position: relative;
 }
 article {
-  margin: 15px 0px 0px 0px;
+  margin: 30px 10px 10px 10px;
 }
-.submitButton {
-  font-size: larger;
-}
-.submitButtonContainer {
-  float: right;
-  margin: 10px 650px 0px 0px;
-}
-.titleContainer {
-  margin: 100px;
-}
-.editorContainer {
-  margin: 10px 100px 10px 100px;
-}
-.titleNode {
-  width: 40%;
+.captchaImage {
+  width: 150px;
   height: 30px;
 }
-.titleText {
-  font-size: medium;
-  font-family: 'Microsoft YaHei';
-  vertical-align: middle;
+.refreshCaptchaButton {
+  margin: 5px 5px 25px 5px;
+  width: 50px;
 }

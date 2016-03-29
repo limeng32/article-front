@@ -2,6 +2,7 @@ var $ = require('node').all;
 var tpl = require('./article-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var Editor = require('editor');
+var EditorUploader = require('kg/editoruploader/2.0.3/index');
 var S = KISSY;
 var Node = require('node');
 var SP = require('../smartPath/smartPath');
@@ -82,7 +83,7 @@ module.exports = {
         "strike-through," +
         "underline," +
         "separator" +
-        ",image" +
+            //",image" +
         ",link" +
         ",fore-color" +
         ",back-color" +
@@ -103,15 +104,27 @@ module.exports = {
         ",justify-center" +
         ",justify-right" +
         ",table" +
-        ",smiley" +
-        ",drag-upload").split(",");
+        ",smiley").split(",");
 
         var fullPlugins = [];
 
         S.each(plugins, function (p, i) {
             fullPlugins[i] = "editor/plugin/" + p;
         });
-
+        //初始化上传插件
+        var editorUploader = new EditorUploader({
+            prefix: 'demo-',
+            multiple: true,
+            auth: {
+                max: 5,
+                maxSize: 1024
+            },
+            type: "auto",
+            action: 'http://localhost:8080/mirage/uploadFile?_content=json',
+            autoUpload: true,
+            name: 'Filedata',
+            listeners: {}
+        });
         var pluginConfig = {
             link: {
                 target: "_blank"
@@ -229,6 +242,7 @@ module.exports = {
             });
 
             cfg.plugins = args;
+            cfg.plugins.push(editorUploader);
             var editor;
             if (cfg.fromTextarea) {
                 editor = Editor.decorate(cfg.fromTextarea, cfg);
@@ -255,9 +269,6 @@ module.exports = {
             //    //console.log(contentHidden.getDOMNode().value);
             //    form_.submit();
             //});
-            submitButton.on("click", function () {
-                contentHiddenContainer.show();
-            });
         });
     }
 }

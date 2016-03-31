@@ -3,9 +3,11 @@ var tpl = require('./article-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var Editor = require('editor');
 var EditorUploader = require('kg/editoruploader/2.0.3/index');
+var DefaultTheme = require('kg/uploader/2.0.3/themes/default/index');
 var S = KISSY;
 var Node = require('node');
 var SP = require('../smartPath/smartPath');
+var AI = require('../authIdentify/index');
 var IO = require('io');
 var Auth = require('kg/auth/2.0.6/');
 var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
@@ -25,7 +27,7 @@ module.exports = {
         var titleNode = new Node('<input>').prop({
             type: 'text',
             name: 'title'
-        }).attr('min-len-title', '6').attr('max-len-title', '50').addClass('titleNode');
+        }).attr('min-len-title', '2').attr('max-len-title', '50').addClass('titleNode');
         var titleText = new Node('<span>').html('标题：').addClass('titleText');
         titleContainer.append(titleText).append(titleNode);
         var contentHidden = new Node('<input>').prop({
@@ -34,7 +36,9 @@ module.exports = {
         }).attr('min-len-content', '20').attr('max-len-content', '32000');
         var contentHiddenContainer = new Node('<div');
         $('article').append(submitForm.append(titleContainer).append(editorContainer));
-        if (auth == null || auth < 5) {
+        if (AI.middleLevelChecked(auth)) {
+            submitForm.append(submitButtonContainer.append(submitButton));
+        } else {
             $('article').append(submitButtonContainer.append('请您先').
                 append(new Node('<a>').prop({
                     href: SP.resolvedPath('signIn')
@@ -42,8 +46,6 @@ module.exports = {
                 append(new Node('<a>').prop({
                     href: SP.resolvedPath('signUp')
                 }).append('注册')));
-        } else {
-            submitForm.append(submitButtonContainer.append(submitButton));
         }
         submitForm.append(contentHiddenContainer.append(contentHidden));
         var formAuth = new Auth(submitForm);
@@ -116,14 +118,17 @@ module.exports = {
             prefix: 'demo-',
             multiple: false,
             auth: {
-                max: 3,
+                max: 5,
+                allowExts: 'jpg,png,gif,bmp,jpeg',
+                allowRepeat: false,
                 maxSize: 1024
             },
             type: ["auto"],
             action: SP.resolvedIOPath('uploadFile?_content=json'),
             autoUpload: true,
             name: 'Filedata',
-            listeners: {}
+            listeners: {
+            }
         });
         var pluginConfig = {
             link: {
@@ -242,7 +247,9 @@ module.exports = {
             });
 
             cfg.plugins = args;
-            cfg.plugins.push(editorUploader);
+            if (AI.middleLevelChecked(auth)) {
+                cfg.plugins.push(editorUploader);
+            }
             var editor;
             if (cfg.fromTextarea) {
                 editor = Editor.decorate(cfg.fromTextarea, cfg);

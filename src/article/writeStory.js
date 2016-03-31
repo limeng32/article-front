@@ -114,13 +114,13 @@ module.exports = {
         //初始化上传插件
         var editorUploader = new EditorUploader({
             prefix: 'demo-',
-            multiple: true,
+            multiple: false,
             auth: {
-                max: 5,
+                max: 3,
                 maxSize: 1024
             },
-            type: "auto",
-            action: 'http://localhost:8080/mirage/uploadFile?_content=json',
+            type: ["auto"],
+            action: SP.resolvedIOPath('uploadFile?_content=json'),
             autoUpload: true,
             name: 'Filedata',
             listeners: {}

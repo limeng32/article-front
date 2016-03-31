@@ -18,7 +18,7 @@ module.exports = {
             value: '发表'
         });
         $('article').append(editorContainer).append(submitForm).append(submitButton);
-        IO.post(SP.resolvedIOPath('readStory/get?_content=json'), function (d) {
+        IO.post(SP.resolvedIOPath('readStory/get?_content=json'), {storyId: storyId}, function (d) {
             d = JSONX.decode(d);
             $('article').append(d.content);
         }, "json");

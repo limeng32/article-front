@@ -11,6 +11,7 @@ var AI = require('../authIdentify/index');
 var IO = require('io');
 var Auth = require('kg/auth/2.0.6/');
 var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
+var UA = require('ua');
 module.exports = {
     init: function () {
         var submitForm = new Node('<form>').prop({
@@ -90,6 +91,7 @@ module.exports = {
         ",fore-color" +
         ",back-color" +
         ",resize" +
+        ",drag-upload" +
         ",draft" +
         ",undo" +
         ",indent" +
@@ -127,8 +129,7 @@ module.exports = {
             action: SP.resolvedIOPath('uploadFile?_content=json'),
             autoUpload: true,
             name: 'Filedata',
-            listeners: {
-            }
+            listeners: {}
         });
         var pluginConfig = {
             link: {
@@ -247,7 +248,7 @@ module.exports = {
             });
 
             cfg.plugins = args;
-            if (AI.middleLevelChecked(auth)) {
+            if (AI.middleLevelChecked(auth) && UA.ie != 9) {
                 cfg.plugins.push(editorUploader);
             }
             var editor;

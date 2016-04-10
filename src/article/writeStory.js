@@ -91,7 +91,6 @@ module.exports = {
         ",fore-color" +
         ",back-color" +
         ",resize" +
-        ",drag-upload" +
         ",draft" +
         ",undo" +
         ",indent" +
@@ -221,18 +220,6 @@ module.exports = {
             },
             "resize": {
                 //direction:["y"]
-            },
-
-            "drag-upload": {
-                suffix: "png,jpg,jpeg,gif",
-                fileInput: "Filedata",
-                sizeLimit: 1000,
-                serverUrl: "upload.jss",
-                serverParams: {
-                    waterMark: function () {
-                        return true;
-                    }
-                }
             }
         };
         KISSY.use(fullPlugins, function (S) {

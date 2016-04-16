@@ -14,6 +14,7 @@ var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
 var UA = require('ua');
 module.exports = {
     init: function () {
+        var ai = new AI(token);
         var submitForm = new Node('<form>').prop({
             action: SP.resolvedPath('writeStory/submitNew'),
             method: 'post'
@@ -37,7 +38,7 @@ module.exports = {
         }).attr('min-len-content', '20').attr('max-len-content', '32000');
         var contentHiddenContainer = new Node('<div');
         $('article').append(submitForm.append(titleContainer).append(editorContainer));
-        if (AI.middleLevelChecked(auth)) {
+        if (ai.existChecked()) {
             submitForm.append(submitButtonContainer.append(submitButton));
         } else {
             $('article').append(submitButtonContainer.append('请您先').
@@ -49,6 +50,12 @@ module.exports = {
                 }).append('注册')));
         }
         submitForm.append(contentHiddenContainer.append(contentHidden));
+        var writerHidden = new Node('<input>').prop({
+            type: 'hidden',
+            name: 'accountId',
+            value: token
+        })
+        submitForm.append(writerHidden);
         var formAuth = new Auth(submitForm);
         formAuth.plug(new AuthMsgs());
         formAuth.register('min-len-content', function (value, attr, defer, field) {
@@ -90,7 +97,6 @@ module.exports = {
         ",link" +
         ",fore-color" +
         ",back-color" +
-        ",resize" +
         ",draft" +
         ",undo" +
         ",indent" +
@@ -217,9 +223,6 @@ module.exports = {
                 "<div style='padding:5px;'>草稿箱能够自动保存您最新编辑的内容，" +
                 "如果发现内容丢失，" +
                 "请选择恢复编辑历史</div></div>"
-            },
-            "resize": {
-                //direction:["y"]
             }
         };
         KISSY.use(fullPlugins, function (S) {
@@ -235,7 +238,7 @@ module.exports = {
             });
 
             cfg.plugins = args;
-            if (AI.middleLevelChecked(auth) && UA.ie != 9) {
+            if (ai.existChecked() && UA.ie != 9) {
                 cfg.plugins.push(editorUploader);
             }
             var editor;

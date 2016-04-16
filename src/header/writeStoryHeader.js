@@ -2,8 +2,11 @@ var $ = require('node').all;
 var Node = require('node');
 var IO = require('io');
 var SP = require('../smartPath/smartPath');
+var AI = require('../authIdentify/index');
+var JSONX = require('../jsonx/jsonx');
 module.exports = {
     init: function () {
+        var ai = new AI(token);
         var headerMain = new Node('<div>').addClass('headerMain');
         var headerTail = new Node('<div>').addClass('headerTail');
         $('header').append(headerMain).append(headerTail);
@@ -25,7 +28,6 @@ module.exports = {
                 window.location.assign(SP.resolvedPath('signIn'));
             });
         } else {
-            headerMain.html('您已经登录成功。您是我们的前100名用户之一，非常非常感谢您参与本站的运行测试。');
             var signOutButton = new Node('<input>').prop({
                 type: 'submit',
                 value: '退出'
@@ -37,6 +39,11 @@ module.exports = {
                         window.location.assign(SP.resolvedPath('.'));
                     }
                 }, 'json');
+            });
+        }
+        if (ai.existChecked()) {
+            ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
+                headerMain.html(account.name + '您好。您是我们的前100名用户之一，非常非常感谢您参与本站的运行测试。');
             });
         }
     }

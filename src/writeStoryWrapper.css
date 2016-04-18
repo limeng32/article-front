@@ -57,7 +57,7 @@ article {
   margin: 100px;
 }
 .editorContainer {
-  margin: 10px 100px 10px 100px;
+  margin: 50px 100px 50px 100px;
 }
 .titleNode {
   width: 40%;
@@ -67,4 +67,15 @@ article {
   font-size: medium;
   font-family: 'Microsoft YaHei';
   vertical-align: middle;
+}
+.titleText2 {
+  font-size: large;
+  font-family: 'Microsoft YaHei';
+  vertical-align: middle;
+}
+.writerContainer {
+  margin: 10px 100px 30px 100px;
+  float: right;
+  color: #999;
+  font-style: italic;
 }

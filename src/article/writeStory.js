@@ -29,7 +29,7 @@ module.exports = {
         var titleNode = new Node('<input>').prop({
             type: 'text',
             name: 'title'
-        }).attr('min-len-title', '2').attr('max-len-title', '50').addClass('titleNode');
+        }).attr('min-len-title', '2').attr('max-len-title', '50').attr('pattern', '^(?!.*?(<|>)).*$').attr('pattern-msg', '标题中不能含有字符<和>').addClass('titleNode');
         var titleText = new Node('<span>').html('标题：').addClass('titleText');
         titleContainer.append(titleText).append(titleNode);
         var contentHidden = new Node('<input>').prop({

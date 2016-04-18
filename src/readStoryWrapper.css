@@ -1,3 +1,7 @@
+body {
+  font-family: 'Microsoft YaHei';
+  font-size: larger;
+}
 header {
   background-color: #149BAD;
   color: #fff;
@@ -38,4 +42,40 @@ body {
   width: 600px;
   height: 350px;
   position: relative;
+}
+article {
+  margin: 15px 0px 0px 0px;
+}
+.submitButton {
+  font-size: larger;
+}
+.submitButtonContainer {
+  float: right;
+  margin: 10px 650px 0px 0px;
+}
+.titleContainer {
+  margin: 100px;
+}
+.editorContainer {
+  margin: 50px 100px 50px 100px;
+}
+.titleNode {
+  width: 40%;
+  height: 30px;
+}
+.titleText {
+  font-size: medium;
+  font-family: 'Microsoft YaHei';
+  vertical-align: middle;
+}
+.titleText2 {
+  font-size: large;
+  font-family: 'Microsoft YaHei';
+  vertical-align: middle;
+}
+.writerContainer {
+  margin: 10px 100px 30px 100px;
+  float: right;
+  color: #999;
+  font-style: italic;
 }

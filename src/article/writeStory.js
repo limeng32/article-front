@@ -12,6 +12,7 @@ var IO = require('io');
 var Auth = require('kg/auth/2.0.6/');
 var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
 var UA = require('ua');
+var AD = require('kg/agiledialog/1.0.2/index');
 module.exports = {
     init: function () {
         var left = new Node('<div>').addClass('left'), middle = new Node('<div>').addClass('middle'), right = new Node('<div>').addClass('right');
@@ -27,6 +28,9 @@ module.exports = {
             value: '发表'
         }).addClass('ks-button ks-button-info ks-button-shown signButton submitButton');
         var submitButtonContainer = new Node('<div>').addClass('submitButtonContainer');
+        var left1 = new Node('<div>').addClass('submitButtonContainerLeft');
+        var submitButtonContainerMiddle = new Node('<div>').addClass('submitButtonContainerMiddle');
+        var right1 = new Node('<div>').addClass('submitButtonContainerRight');
         var titleContainer = new Node('<div>').addClass('titleContainer');
         var titleNode = new Node('<input>').prop({
             type: 'text',
@@ -37,19 +41,19 @@ module.exports = {
         var contentHidden = new Node('<input>').prop({
             type: 'hidden',
             name: 'content'
-        }).attr('min-len-content', '20').attr('max-len-content', '32000');
-        var contentHiddenContainer = new Node('<div');
-        middle.append(submitForm.append(titleContainer).append(editorContainer));
+        }).attr('min-len-content', '20').attr('max-len-content', '32000').attr('checkAI', '');
+        var contentHiddenContainer = new Node('<div>');
+        middle.append(submitForm.append(titleContainer).append(editorContainer).append(submitButtonContainer.append(left1).append(submitButtonContainerMiddle).append(right1)));
         if (ai.existChecked()) {
-            submitForm.append(submitButtonContainer.append(submitButton));
+            submitButtonContainerMiddle.append(submitButton);
         } else {
-            middle.append(submitButtonContainer.append('请您先').
+            submitButtonContainerMiddle.append('请您先').
                 append(new Node('<a>').prop({
                     href: SP.resolvedPath('signIn')
                 }).append('登录')).append('或者').
                 append(new Node('<a>').prop({
                     href: SP.resolvedPath('signUp')
-                }).append('注册')));
+                }).append('注册'));
         }
         submitForm.append(contentHiddenContainer.append(contentHidden));
         var writerHidden = new Node('<input>').prop({
@@ -60,14 +64,51 @@ module.exports = {
         submitForm.append(writerHidden);
         var formAuth = new Auth(submitForm);
         formAuth.plug(new AuthMsgs());
-        formAuth.register('min-len-content', function (value, attr, defer, field) {
-            var min = Number(attr);
-            this.msg('error', '请您输入的内容过少，无法提交');
-            return value.length >= Number(attr);
+        formAuth.register('checkAI', function (value, attr, defer, field) {
+            var self = this;
+            if (ai.existChecked()) {
+                var dialog = new AD({
+                    title: '温馨提示',
+                    content: '您确定要提交这个作品？',
+                    onConfirm: function () {
+                        defer.resolve(self);
+                    },
+                    onCancel: function () {
+                        defer.reject(self);
+                    }
+                });
+            } else {
+                new AD({
+                    type: 'alert',
+                    content: "请您先登录再进行创作"
+                });
+                defer.reject(self);
+            }
+            return defer.promise;
+        }).register('min-len-content', function (value, attr, defer, field) {
+            var self = this;
+            if (value.length >= Number(attr)) {
+                defer.resolve(self);
+            } else {
+                new AD({
+                    type: 'alert',
+                    content: "您输入的内容过少，无法提交"
+                });
+                defer.reject(self);
+            }
+            return defer.promise;
         }).register('max-len-content', function (value, attr, defer, field) {
-            var max = Number(attr);
-            this.msg('error', '请您输入的内容过多，无法提交');
-            return value.length <= Number(attr);
+            var self = this;
+            if (value.length <= Number(attr)) {
+                defer.resolve(self);
+            } else {
+                new AD({
+                    type: 'alert',
+                    content: "您输入的内容过多，无法提交"
+                });
+                defer.reject(self);
+            }
+            return defer.promise;
         }).register('min-len-title', function (value, attr, defer, field) {
             var min = Number(attr);
             this.msg('error', '标题不能少于' + min + '个字');

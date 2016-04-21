@@ -3,6 +3,9 @@ body {
   font-size: larger;
   color: #434343;
   background: #efefef url('http://jayli.github.io/gallery/yuislide/assets/background.png') repeat top center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 .articleMain {
   float: left;

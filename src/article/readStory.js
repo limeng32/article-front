@@ -8,13 +8,16 @@ var JSONX = require('../jsonx/jsonx');
 var IO = require('io');
 module.exports = {
     init: function () {
-        var editorContainer = new Node('<div>').addClass('editorContainer');
-        var titleContainer = new Node('<div').addClass('titleContainer');
+        var left = new Node('<div>').addClass('left'),middle = new Node('<div>').addClass('middle'),right = new Node('<div>').addClass('right');
+        $('article').append(left).append(middle).append(right);
+        var editorContainer = new Node('<div>').addClass('editorContainer2');
+        var titleContainer = new Node('<div>').addClass('titleContainer');
         var titleNode = new Node('<span>').addClass('titleNode').addClass('titleText2');
         var titleText = new Node('<span>').html('标题：').addClass('titleText2');
+        var clear = new Node('<div>').addClass('clear');
         titleContainer.append(titleText).append(titleNode);
         var writerContainer = new Node('<div>').addClass('writerContainer');
-        $('article').append(titleContainer).append(writerContainer).append(editorContainer);
+        middle.append(titleContainer).append(writerContainer).append(clear).append(editorContainer);
         IO.post(SP.resolvedIOPath('readStory/get?_content=json'), {storyId: storyId}, function (d) {
             d = JSONX.decode(d);
             if (d.account != null) {

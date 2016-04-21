@@ -14,6 +14,8 @@ var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
 var UA = require('ua');
 module.exports = {
     init: function () {
+        var left = new Node('<div>').addClass('left'), middle = new Node('<div>').addClass('middle'), right = new Node('<div>').addClass('right');
+        $('article').append(left).append(middle).append(right);
         var ai = new AI(token);
         var submitForm = new Node('<form>').prop({
             action: SP.resolvedPath('writeStory/submitNew'),
@@ -25,7 +27,7 @@ module.exports = {
             value: '发表'
         }).addClass('ks-button ks-button-info ks-button-shown signButton submitButton');
         var submitButtonContainer = new Node('<div>').addClass('submitButtonContainer');
-        var titleContainer = new Node('<div').addClass('titleContainer');
+        var titleContainer = new Node('<div>').addClass('titleContainer');
         var titleNode = new Node('<input>').prop({
             type: 'text',
             name: 'title'
@@ -37,11 +39,11 @@ module.exports = {
             name: 'content'
         }).attr('min-len-content', '20').attr('max-len-content', '32000');
         var contentHiddenContainer = new Node('<div');
-        $('article').append(submitForm.append(titleContainer).append(editorContainer));
+        middle.append(submitForm.append(titleContainer).append(editorContainer));
         if (ai.existChecked()) {
             submitForm.append(submitButtonContainer.append(submitButton));
         } else {
-            $('article').append(submitButtonContainer.append('请您先').
+            middle.append(submitButtonContainer.append('请您先').
                 append(new Node('<a>').prop({
                     href: SP.resolvedPath('signIn')
                 }).append('登录')).append('或者').

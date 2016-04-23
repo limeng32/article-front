@@ -43,7 +43,7 @@ module.exports = {
         }
         if (ai.existChecked()) {
             ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
-                headerMain.html(account.name + '您好。您是我们的前100名用户之一，非常非常感谢您参与本站的运行测试。');
+                headerMain.html(account.name + '您好，请编辑您的故事。');
             });
         }
     }

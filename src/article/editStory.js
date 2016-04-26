@@ -20,7 +20,7 @@ module.exports = {
         $('article').append(left).append(middle).append(right);
         var ai = new AI(token);
         var submitForm = new Node('<form>').prop({
-            action: SP.resolvedPath('writeStory/submitNew'),
+            action: SP.resolvedPath('editStory/submitEdit'),
             method: 'post'
         });
         var editorContainer = new Node('<div>').addClass('editorContainer');
@@ -62,7 +62,11 @@ module.exports = {
             name: 'accountId',
             value: token
         })
-        submitForm.append(writerHidden);
+        var storyHidden = new Node('<input>').prop({
+            type: 'hidden',
+            name: 'storyId'
+        })
+        submitForm.append(writerHidden).append(storyHidden);
         var formAuth = new Auth(submitForm);
         formAuth.plug(new AuthMsgs());
         formAuth.register('checkAI', function (value, attr, defer, field) {
@@ -322,8 +326,11 @@ module.exports = {
                                             content: "您的账号出现问题"
                                         });
                                     } else if (account.id == d.account.id) {
-                                        editor.setData(d.content);
+                                        editor.setData(d.storyBucket[0].content);
                                         titleNode.getDOMNode().value = d.title;
+                                        console.log(d.id);
+                                        storyHidden.getDOMNode().value = d.id;
+                                        console.log(document.getElementsByName('id')[0].value);
                                     } else {
                                         new AD({
                                             type: 'alert',

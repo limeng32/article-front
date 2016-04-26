@@ -8,7 +8,7 @@ var JSONX = require('../jsonx/jsonx');
 var IO = require('io');
 module.exports = {
     init: function () {
-        var left = new Node('<div>').addClass('left'),middle = new Node('<div>').addClass('middle'),right = new Node('<div>').addClass('right');
+        var left = new Node('<div>').addClass('left'), middle = new Node('<div>').addClass('middle'), right = new Node('<div>').addClass('right');
         $('article').append(left).append(middle).append(right);
         var editorContainer = new Node('<div>').addClass('editorContainer2');
         var titleContainer = new Node('<div>').addClass('titleContainer');
@@ -25,7 +25,7 @@ module.exports = {
                 writerContainer.append('创作于：').append(d.createTime);
             }
             titleNode.append(d.title);
-            editorContainer.append(d.content);
+            editorContainer.append(d.storyBucket[0].content);
         }, "json");
     }
 }

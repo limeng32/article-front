@@ -14,6 +14,7 @@ var AuthMsgs = require('kg/auth/2.0.6/plugin/msgs/');
 var UA = require('ua');
 var AD = require('kg/agiledialog/1.0.2/index');
 var JSONX = require('../jsonx/jsonx');
+var OL = require('overlay');
 module.exports = {
     init: function () {
         var left = new Node('<div>').addClass('left'), middle = new Node('<div>').addClass('middle'), right = new Node('<div>').addClass('right');
@@ -153,7 +154,6 @@ module.exports = {
         ",ordered-list" +
         ",element-path" +
         ",page-break" +
-        ",preview" +
         ",maximize" +
         ",remove-format" +
         ",heading" +
@@ -328,9 +328,7 @@ module.exports = {
                                     } else if (account.id == d.account.id) {
                                         editor.setData(d.storyBucket[0].content);
                                         titleNode.getDOMNode().value = d.title;
-                                        console.log(d.id);
                                         storyHidden.getDOMNode().value = d.id;
-                                        console.log(document.getElementsByName('id')[0].value);
                                     } else {
                                         new AD({
                                             type: 'alert',
@@ -358,5 +356,21 @@ module.exports = {
             //    }, "json"
             //);
         });
+        var ol = new OL({
+                effect: 'slide',    // {String} - 可选, 默认为'none', 'none'(无特效), 'fade'(渐隐显示), 'slide'(滑动显示).
+                easing: '',        // {String} - 可选, 同 KISSY.Anim 的 easing 参数配置.
+                duration: 10,        // {Number} - 可选, 动画持续时间, 以秒为单位.
+                mask: true,
+                closable: true,
+                closeOnClick: true,
+                content: 'asd',
+                visible: true,
+                xy: [50, 100],
+                width:'200px',
+                target: submitButtonContainerMiddle,
+                closeAction: 'hide'
+            }
+        );
+        //ol.show();
     }
 }

@@ -1,0 +1,31 @@
+<p>
+<table class="storyList">
+    <tr>
+        <td class="storyList-title-td">
+            <a class="storyList-title-td-a" href="{{SP.resolvedPath('readStory/' + p.pageItems[0].id)}}" target="_blank">{{p.pageItems[0].title}}</a>
+        </td>
+        <td class="storyList-writer-td">{{p.pageItems[0].account.name}}</td>
+        <td class="storyList-ct-td">{{p.pageItems[0].createTime}}</td>
+    </tr>
+    <tr>
+        <td class="storyList-title-td"><a href="{{SP.resolvedPath('readStory/' + p.pageItems[1].id)}}" target="_blank">{{p.pageItems[1].title}}</a></td>
+        <td class="storyList-writer-td">{{p.pageItems[1].account.name}}</td>
+        <td class="storyList-ct-td">{{p.pageItems[1].createTime}}</td>
+    </tr>
+    <tr>
+        <td class="storyList-title-td"><a href="{{SP.resolvedPath('readStory/' + p.pageItems[2].id)}}" target="_blank">{{p.pageItems[2].title}}</a></td>
+        <td class="storyList-writer-td">{{p.pageItems[2].account.name}}</td>
+        <td class="storyList-ct-td">{{p.pageItems[2].createTime}}</td>
+    </tr>
+    <tr>
+        <td class="storyList-title-td"><a href="{{SP.resolvedPath('readStory/' + p.pageItems[3].id)}}" target="_blank">{{p.pageItems[3].title}}</a></td>
+        <td class="storyList-writer-td">{{p.pageItems[3].account.name}}</td>
+        <td class="storyList-ct-td">{{p.pageItems[3].createTime}}</td>
+    </tr>
+    <tr>
+        <td class="storyList-title-td"><a href="{{SP.resolvedPath('readStory/' + p.pageItems[4].id)}}" target="_blank">{{p.pageItems[4].title}}</a></td>
+        <td class="storyList-writer-td">{{p.pageItems[4].account.name}}</td>
+        <td class="storyList-ct-td">{{p.pageItems[4].createTime}}</td>
+    </tr>
+</table>
+</p>

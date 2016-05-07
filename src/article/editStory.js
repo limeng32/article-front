@@ -43,7 +43,7 @@ module.exports = {
         var contentHidden = new Node('<input>').prop({
             type: 'hidden',
             name: 'content'
-        }).attr('min-len-content', '20').attr('max-len-content', '32000').attr('checkAI', '');
+        }).attr('min-len-content', '20').attr('max-len-content', '122000').attr('checkAI', '');
         var contentHiddenContainer = new Node('<div>');
         middle.append(submitForm.append(titleContainer).append(editorContainer).append(submitButtonContainer.append(left1).append(submitButtonContainerMiddle).append(right1)));
         if (ai.existChecked()) {
@@ -70,28 +70,7 @@ module.exports = {
         submitForm.append(writerHidden).append(storyHidden);
         var formAuth = new Auth(submitForm);
         formAuth.plug(new AuthMsgs());
-        formAuth.register('checkAI', function (value, attr, defer, field) {
-            var self = this;
-            if (ai.existChecked()) {
-                var dialog = new AD({
-                    title: '温馨提示',
-                    content: '您确定要提交这个作品？',
-                    onConfirm: function () {
-                        defer.resolve(self);
-                    },
-                    onCancel: function () {
-                        defer.reject(self);
-                    }
-                });
-            } else {
-                new AD({
-                    type: 'alert',
-                    content: "请您先登录再进行创作"
-                });
-                defer.reject(self);
-            }
-            return defer.promise;
-        }).register('min-len-content', function (value, attr, defer, field) {
+        formAuth.register('min-len-content', function (value, attr, defer, field) {
             var self = this;
             if (value.length >= Number(attr)) {
                 defer.resolve(self);
@@ -123,6 +102,27 @@ module.exports = {
             var max = Number(attr);
             this.msg('error', '标题不能多于' + max + '个字');
             return value.length <= Number(attr);
+        }).register('checkAI', function (value, attr, defer, field) {
+            var self = this;
+            if (ai.existChecked()) {
+                new AD({
+                    title: '温馨提示',
+                    content: '您确定要提交这个作品？',
+                    onConfirm: function () {
+                        defer.resolve(self);
+                    },
+                    onCancel: function () {
+                        defer.reject(self);
+                    }
+                });
+            } else {
+                new AD({
+                    type: 'alert',
+                    content: "请您先登录再进行创作"
+                });
+                defer.reject(self);
+            }
+            return defer.promise;
         });
         var cfg = {
             focused: true,
@@ -327,6 +327,7 @@ module.exports = {
                                         });
                                     } else if (account.id == d.account.id) {
                                         editor.setData(d.storyBucket[0].content);
+                                        contentHidden.getDOMNode().value = d.storyBucket[0].content;
                                         titleNode.getDOMNode().value = d.title;
                                         storyHidden.getDOMNode().value = d.id;
                                     } else {

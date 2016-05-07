@@ -1,6 +1,6 @@
 KISSY.add(function(S,require,exports,module){
 /*compiled by xtemplate#3.3.3*/
-var ret = module.exports = function content(undefined){
+var ret = module.exports = function articleView(undefined){
 var t;
 var t0;
 var t1;

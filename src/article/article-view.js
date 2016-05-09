@@ -41,6 +41,7 @@ var debuggerCommand = nativeCommands["debugger"];
 
 
 buffer.data += '<h1>';
+pos.line = 1;
 var id0 = ((t=(affix.title)) !== undefined ? t:((t = data.title) !== undefined ? t :scope.resolveLooseUp(["title"])));
 buffer = buffer.writeEscaped(id0);
 buffer.data += '</h1>\n<p>';

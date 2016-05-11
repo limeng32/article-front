@@ -13,11 +13,18 @@ var PG = require('kg/pagination/2.0.0/index');
 var TIP = require('kg/tooltip/2.2.0/index');
 module.exports = {
     init: function () {
+        var ai = new AI(token);
         IO.post(SP.resolvedIOPath('home/get?_content=json'), {}, function (d) {
             d = JSONX.decode(d);
-            dealStory(d);
+            if (ai.existChecked()) {
+                ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
+                    dealStory(d, account);
+                });
+            } else {
+                dealStory(d);
+            }
         }, "json");
-        var dealStory = function (p) {
+        var dealStory = function (p, account) {
             var storyContainer = new Node('<div>');
             $('article').append(storyContainer);
             var storyPaginationContainer = new Node('<div>').addClass('demo-con skin-tb storyPaginationContainer');
@@ -39,25 +46,59 @@ module.exports = {
             var renderStorys = function (p) {
                 var html = new XTemplate(tpl).render({
                     p: p,
-                    SP: SP
+                    SP: SP,
+                    account: account
                 });
                 storyContainer.html(html);
-                var tipN = new Node('<div>').addClass('bubble J_Tooltip');
-                var tipSpan = new Node('<span>').addClass('J_TooltipArrow arrow-top');
-                tipSpan.append(new Node('<i>'));
-                var tipContent = new Node('<div>').addClass('tooltip-content');
-                tipContent.html('这是tips');
-                tipN.append(tipSpan).append(tipContent);
-                tipN.hide();
-                $('article').append(tipN);
+                var tipDelete = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content').html('删除文章')).hide();
+                $('article').append(tipDelete);
                 TIP.attach({
-                    trigger: '.storyList-title-td-a',      // 用于触发Tooltip出现的节点
-                    refer: '.storyList-title-td-a',          // 用于Tooltip进行位置计算的节点
-                    tooltip: tipN,      // Tooltip节点
-                    // ------------ 以下参数可选 ------------------------------
-                    position: 'right'          // 可选：默认情况下，Tooltip会根据当前视域进行位置的计算，但是你也可以通过这个属性来强制Tooltip的显示位置，可用值：top,bottom,right,left
+                    trigger: '.component-list .delete',      // 用于触发Tooltip出现的节点
+                    refer: '.component-list .delete',          // 用于Tooltip进行位置计算的节点
+                    tooltip: tipDelete,      // Tooltip节点
+                    position: 'top'          // 可选：默认情况下，Tooltip会根据当前视域进行位置的计算，但是你也可以通过这个属性来强制Tooltip的显示位置，可用值：top,bottom,right,left
+                });
+                var tipPublish = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content').html('发布/取消')).hide();
+                $('article').append(tipPublish);
+                TIP.attach({
+                    trigger: '.component-list .publish',      // 用于触发Tooltip出现的节点
+                    refer: '.component-list .publish',          // 用于Tooltip进行位置计算的节点
+                    tooltip: tipPublish,      // Tooltip节点
+                    position: 'top'          // 可选：默认情况下，Tooltip会根据当前视域进行位置的计算，但是你也可以通过这个属性来强制Tooltip的显示位置，可用值：top,bottom,right,left
+                });
+                var tipEdit = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content').html('编辑文章')).hide();
+                $('article').append(tipEdit);
+                TIP.attach({
+                    trigger: '.component-list .edit',      // 用于触发Tooltip出现的节点
+                    refer: '.component-list .edit',          // 用于Tooltip进行位置计算的节点
+                    tooltip: tipEdit,      // Tooltip节点
                     //arrowAlign: 'center',       // 可选：Tooltip的箭头和refer的位置关系: left,center,right
-                    //align: 'center'           // 可选：Tooltip主体和refer的位置关系
+                    align: 'right',           // 可选：Tooltip主体和refer的位置关系
+                    position: 'top'          // 可选：默认情况下，Tooltip会根据当前视域进行位置的计算，但是你也可以通过这个属性来强制Tooltip的显示位置，可用值：top,bottom,right,left
+                });
+                $('.component-list .delete').on('click', function (e) {
+                    var id = new Node(e.target).attr('bind-data');
+                    new AD({
+                        title: '温馨提示',
+                        content: '您确定要删除这篇文章？',
+                        onConfirm: function () {
+                            alert('删除' + id);
+                        },
+                        onCancel: function () {
+                        }
+                    });
+                });
+                $('.component-list .publish').on('click', function (e) {
+                    var id = new Node(e.target).attr('bind-data');
+                    new AD({
+                        title: '温馨提示',
+                        content: '您确定要取消这篇文章的发布状态？',
+                        onConfirm: function () {
+                            alert('取消' + id);
+                        },
+                        onCancel: function () {
+                        }
+                    });
                 });
             }
             renderStorys(p);

@@ -1,5 +1,6 @@
 var $ = require('node').all;
 var tpl = require('./home-view');
+var selectTpl = require('./homeSelect-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var S = KISSY;
 var Node = require('node');
@@ -11,6 +12,7 @@ var AD = require('kg/agiledialog/1.0.2/index');
 var JSONX = require('../jsonx/jsonx');
 var PG = require('kg/pagination/2.0.0/index');
 var TIP = require('kg/tooltip/2.2.0/index');
+var SELECT = require('kg/select/2.0.1/index');
 module.exports = {
     init: function () {
         var ai = new AI(token);
@@ -18,12 +20,41 @@ module.exports = {
             d = JSONX.decode(d);
             if (ai.existChecked()) {
                 ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
+                    dealSelect(account);
                     dealStory(d, account);
                 });
             } else {
+                dealSelect();
                 dealStory(d);
             }
         }, "json");
+        var dealSelect = function (account) {
+            var selectContainer = new Node('<div>').addClass('selectContainer');
+            $('article').append(selectContainer);
+            var selectHtml = new XTemplate(selectTpl).render({});
+            selectContainer.html(selectHtml);
+            var select = new SELECT('#J_ServiceType', {
+                    width: 200,
+                    // 设置对齐方式, 与普通的 Align 大体一致
+                    // 该配置同菜单配置项
+                    menuCfg: {
+                        align: {
+                            offset: [0, -1]
+                        },
+                        height: 120,
+                        elStyle: {
+                            overflow: "auto",
+                            overflowX: "hidden"
+                        }
+                    }
+                }
+            );
+            select.on('valueChange', function (ev) {
+                var $select = ev.$select;
+                console.log($select[0].value);
+            })
+            select.render();
+        }
         var dealStory = function (p, account) {
             var storyContainer = new Node('<div>');
             $('article').append(storyContainer);

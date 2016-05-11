@@ -5,8 +5,6 @@
     -->
 
     <h2 class="h2"><span class="iconfont">&#xe601;</span><span class="J_Floor">故事列表</span></h2>
-
-    <p class="explain"><span class="iconfont">&#xe600;</span><span>查询条件</span></p>
     <ul id="J_KISSYUI" class="component-list" style="width: 920px">
         <li class="item">
             {{#if( p.pageItems[0] )}}

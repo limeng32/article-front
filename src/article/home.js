@@ -13,6 +13,7 @@ var JSONX = require('../jsonx/jsonx');
 var PG = require('kg/pagination/2.0.0/index');
 var TIP = require('kg/tooltip/2.2.0/index');
 var DL = require('kg/droplist/2.0.1/index');
+var CB = require('combobox');
 module.exports = {
     init: function () {
         var ai = new AI(token);
@@ -31,8 +32,7 @@ module.exports = {
         var dealSelect = function (account) {
             var selectContainer = new Node('<div>').addClass('selectContainer');
             $('article').append(selectContainer);
-            var selectHtml = new XTemplate(selectTpl).render({});
-            selectContainer.append(selectHtml);
+            selectContainer.append(new XTemplate(selectTpl).render({}));
             var droplist = new DL({
                 // 设置初始化选择项。
                 selectedItem: {
@@ -55,6 +55,16 @@ module.exports = {
                 console.log(data.value);
             });
             droplist.render();
+            var combo = new CB({
+                dataSource: new CB.LocalDataSource({
+                    data: ["abc", "123",'asd','qwe','zxc']
+                }),
+                validator: function (v, complete) {
+                    complete(!v ? "必填" : "");
+                },
+                srcNode: '.ks-combobox'
+            })
+            combo.render();
         }
         var dealStory = function (p, account) {
             var storyContainer = new Node('<div>');

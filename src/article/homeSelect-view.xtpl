@@ -1,10 +1,17 @@
-<p class="explain">
-<div class="droplist">
+<p></p>
+<span class="droplist">
     <div class="drop-trigger"><i class="caret"></i></div>
     <div class="drop-wrap">
         <input type="text" class="drop-text"/>
     </div>
     <input type="hidden" class="drop-value"/>
-</div>
-
-</p>
+</span>
+<span class="ks-combobox" id="combobox">
+    <div class="ks-combobox-input-wrap">
+        <input style="width:100%;height:100%;" aria-haspopup="true"
+               aria-combobox="list" role="combobox" combobox="off"
+               class="ks-combobox-input" tabindex="0"
+               id="inp"
+                />
+    </div>
+</span>

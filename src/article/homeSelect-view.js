@@ -40,7 +40,7 @@ var macroCommand = nativeCommands["macro"];
 var debuggerCommand = nativeCommands["debugger"];
 
 
-buffer.data += '<p class="explain">\n<div class="droplist">\n    <div class="drop-trigger"><i class="caret"></i></div>\n    <div class="drop-wrap">\n        <input type="text" class="drop-text"/>\n    </div>\n    <input type="hidden" class="drop-value"/>\n</div>\n\n</p>';
+buffer.data += '<p></p>\n<span class="droplist">\n    <div class="drop-trigger"><i class="caret"></i></div>\n    <div class="drop-wrap">\n        <input type="text" class="drop-text"/>\n    </div>\n    <input type="hidden" class="drop-value"/>\n</span>\n<span class="ks-combobox" id="combobox">\n    <div class="ks-combobox-input-wrap">\n        <input style="width:100%;height:100%;" aria-haspopup="true"\n               aria-combobox="list" role="combobox" combobox="off"\n               class="ks-combobox-input" tabindex="0"\n               id="inp"\n                />\n    </div>\n</span>';
 return buffer;
 };
 ret.TPL_NAME = module.id || module.name;

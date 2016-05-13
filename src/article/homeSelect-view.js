@@ -40,7 +40,7 @@ var macroCommand = nativeCommands["macro"];
 var debuggerCommand = nativeCommands["debugger"];
 
 
-buffer.data += '<p class="explain">\n    <select name="service-type" id="J_ServiceType" class="select">\n        <option value="0">仅退款<span>（不退货）</span></option>\n        <option value="1">退货退款</option>\n        <option value="2">换货</option>\n        <option value="3">维修</option>\n        <option value="4">补寄1</option>\n    </select>\n</p>';
+buffer.data += '<p class="explain">\n<div class="droplist">\n    <div class="drop-trigger"><i class="caret"></i></div>\n    <div class="drop-wrap">\n        <input type="text" class="drop-text"/>\n    </div>\n    <input type="hidden" class="drop-value"/>\n</div>\n\n</p>';
 return buffer;
 };
 ret.TPL_NAME = module.id || module.name;

@@ -12,7 +12,7 @@ var AD = require('kg/agiledialog/1.0.2/index');
 var JSONX = require('../jsonx/jsonx');
 var PG = require('kg/pagination/2.0.0/index');
 var TIP = require('kg/tooltip/2.2.0/index');
-var SELECT = require('kg/select/2.0.1/index');
+var DL = require('kg/droplist/2.0.1/index');
 module.exports = {
     init: function () {
         var ai = new AI(token);
@@ -32,28 +32,29 @@ module.exports = {
             var selectContainer = new Node('<div>').addClass('selectContainer');
             $('article').append(selectContainer);
             var selectHtml = new XTemplate(selectTpl).render({});
-            selectContainer.html(selectHtml);
-            var select = new SELECT('#J_ServiceType', {
-                    width: 200,
-                    // 设置对齐方式, 与普通的 Align 大体一致
-                    // 该配置同菜单配置项
-                    menuCfg: {
-                        align: {
-                            offset: [0, -1]
-                        },
-                        height: 120,
-                        elStyle: {
-                            overflow: "auto",
-                            overflowX: "hidden"
-                        }
-                    }
-                }
-            );
-            select.on('valueChange', function (ev) {
-                var $select = ev.$select;
-                console.log($select[0].value);
-            })
-            select.render();
+            selectContainer.append(selectHtml);
+            var droplist = new DL({
+                // 设置初始化选择项。
+                selectedItem: {
+                    value: "2",
+                    text: "全部文章"
+                },
+                srcNode: ".droplist",
+                // 直接传入数据。
+                // 数据格式需要有text和value。且value不允许重复。
+                // <a class="tip" href="#standard">什么是标准数据</a>
+                dataSource: [
+                    {text: "首页推荐", value: 1},
+                    {text: "全部文章", value: 2},
+                    {text: "我的草稿箱", value: 3},
+                    {text: "我的回收站", value: 4}
+                ]
+            });
+            droplist.on('change', function (ev) {
+                var data = ev.data;
+                console.log(data.value);
+            });
+            droplist.render();
         }
         var dealStory = function (p, account) {
             var storyContainer = new Node('<div>');

@@ -1,4 +1,4 @@
-<p></p>
+<h2 class="h2"><span class="iconfont">&#xe601;</span><span class="J_Floor">故事列表</span></h2>
 <span class="droplist">
     <div class="drop-trigger"><i class="caret"></i></div>
     <div class="drop-wrap">
@@ -8,10 +8,10 @@
 </span>
 <span class="ks-combobox" id="combobox">
     <div class="ks-combobox-input-wrap">
-        <input style="width:100%;height:100%;" aria-haspopup="true"
+        <input style="width:500px;height:100%;" aria-haspopup="true"
                aria-combobox="list" role="combobox" combobox="off"
                class="ks-combobox-input" tabindex="0"
-               id="inp"
+               id="inp" placeholder=" 多个关键字可用空格分开"
                 />
     </div>
 </span>

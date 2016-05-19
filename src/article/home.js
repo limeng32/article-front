@@ -52,14 +52,85 @@ module.exports = {
         droplist.render();
         var combo = new CB({
             dataSource: new CB.LocalDataSource({
-                data: ["abc", "123", 'asd', 'qwe', 'zxc']
+                data: []
             }),
-            validator: function (v, complete) {
-                complete(!v ? "必填" : "");
-            },
+            maxItemCount: 10,
+            matchElWidth: false,
+            //format: function (query, data) {
+            //    var ret = [];
+            //    for (var i = 0; i < data.length; i++) {
+            //        ret[i] = {
+            //            content: (data[i] + "")
+            //                .replace(new RegExp(S.escapeRegExp(query), "g"),
+            //                "<b>$&</b>"),
+            //        };
+            //    }
+            //    return ret;
+            //},
             srcNode: '.ks-combobox'
         })
         combo.render();
+        var comboEl = combo.get('input');
+        comboEl.on('keyup', function (e) {
+            if (e.which == 38 || e.which == 40) {
+                return;
+            }
+            if (comboEl[0].value == '') {
+                combo.__attrVals.dataSource = new CB.LocalDataSource({
+                    data: []
+                });
+                combo.sendRequest('');
+                return;
+            }
+            IO.post(SP.resolvedIOPath('home/preSearchStory?_content=json'), {
+                q: comboEl[0].value,
+                status: droplist.getSelectedData().value
+            }, function (d) {
+                d = JSONX.decode(d);
+                var dataSourceArray = new Array(d.length);
+                for (var i = 0; i < dataSourceArray.length; i++) {
+                    dataSourceArray[i] = d[i].title;
+                }
+                combo.__attrVals.dataSource = new CB.LocalDataSource({
+                    data: dataSourceArray
+                });
+                combo.sendRequest('');
+            }, "json");
+        });
+        comboEl.on('focus', function (e) {
+            if (comboEl[0].value == '') {
+                return;
+            }
+            IO.post(SP.resolvedIOPath('home/preSearchStory?_content=json'), {
+                q: comboEl[0].value,
+                status: droplist.getSelectedData().value
+            }, function (d) {
+                d = JSONX.decode(d);
+                var dataSourceArray = new Array(d.length);
+                for (var i = 0; i < dataSourceArray.length; i++) {
+                    dataSourceArray[i] = d[i].title;
+                }
+                combo.__attrVals.dataSource = new CB.LocalDataSource({
+                    data: dataSourceArray
+                });
+                combo.sendRequest('');
+            }, "json");
+        });
+        combo.on("click", function (e) {
+            var item = e.target;
+            //console.log(item.get("value") + "\n" + item.get("content") +
+            //    "\n" + item.get('textContent'));
+            comboEl.fire('blur');
+            IO.post(SP.resolvedIOPath('home/get?_content=json'), {
+                q: item.get("textContent"),
+                status: droplist.getSelectedData().value
+            }, function (d) {
+                d = JSONX.decode(d);
+                renderStorys(d);
+                reRenderPage(d);
+                //console.log(account);
+            }, "json");
+        });
         var storyContainer = new Node('<div>');
         $('article').append(storyContainer);
         var storyPaginationContainer = new Node('<div>').addClass('demo-con skin-tb storyPaginationContainer');
@@ -159,6 +230,7 @@ module.exports = {
             storyPagination.on('switch', function (e) {
                 IO.post(SP.resolvedIOPath('home/get?_content=json'), {
                     pageNo: e.toPage,
+                    q: comboEl[0].value,
                     status: droplist.getSelectedData().value
                 }, function (d) {
                     d = JSONX.decode(d);
@@ -169,6 +241,7 @@ module.exports = {
             droplist.on('change', function (ev) {
                 IO.post(SP.resolvedIOPath('home/get?_content=json'), {
                     pageNo: 1,
+                    q: comboEl[0].value,
                     status: droplist.getSelectedData().value
                 }, function (d) {
                     d = JSONX.decode(d);

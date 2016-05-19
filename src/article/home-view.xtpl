@@ -1,10 +1,5 @@
 <p>
 <div class="component kissy-ui" style="margin-left: 5px">
-    <!--
-            <h2>kissy 共有优秀组件 <strong id="J_ComponentCount">*</strong> 个</h2>
-    -->
-
-    <h2 class="h2"><span class="iconfont">&#xe601;</span><span class="J_Floor">故事列表</span></h2>
     <ul id="J_KISSYUI" class="component-list" style="width: 920px">
         <li class="item">
             {{#if( p.pageItems[0] )}}

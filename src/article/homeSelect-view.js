@@ -40,7 +40,7 @@ var macroCommand = nativeCommands["macro"];
 var debuggerCommand = nativeCommands["debugger"];
 
 
-buffer.data += '<h2 class="h2"><span class="iconfont">&#xe601;</span><span class="J_Floor">故事列表</span></h2>\n<span class="droplist">\n    <div class="drop-trigger"><i class="caret"></i></div>\n    <div class="drop-wrap">\n        <input type="text" class="drop-text"/>\n    </div>\n    <input type="hidden" class="drop-value"/>\n</span>\n<span class="ks-combobox" id="combobox">\n    <div class="ks-combobox-input-wrap">\n        <input style="width:500px;height:100%;" aria-haspopup="true"\n               aria-combobox="list" role="combobox" combobox="off"\n               class="ks-combobox-input" tabindex="0"\n               id="inp" placeholder=" 多个关键字可用空格分开"\n                />\n    </div>\n</span>';
+buffer.data += '<h2 class="h2"><span class="iconfont">&#xe601;</span><span class="J_Floor">故事列表</span></h2>\n<span class="droplist">\n    <div class="drop-trigger"><i class="caret"></i></div>\n    <div class="drop-wrap">\n        <input type="text" class="drop-text"/>\n    </div>\n    <input type="hidden" class="drop-value"/>\n</span>\n<span class="ks-combobox" id="combobox">\n    <div class="ks-combobox-input-wrap">\n        <input style="width:500px;height:100%;" aria-haspopup="true"\n               aria-combobox="list" role="combobox" combobox="off"\n               class="ks-combobox-input" tabindex="0"\n               id="inp" placeholder=" 多个关键字可用空格分隔"\n                />\n    </div>\n</span><span class="ks-button searchButton">搜索<img class="searchIcon"\n                                                   src="http://mirage-limeng32.oss-cn-qingdao.aliyuncs.com/system/search.png"></span>';
 return buffer;
 };
 ret.TPL_NAME = module.id || module.name;

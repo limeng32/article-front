@@ -55,7 +55,7 @@ module.exports = {
                 data: []
             }),
             maxItemCount: 10,
-            matchElWidth: false,
+            matchElWidth: true,
             //format: function (query, data) {
             //    var ret = [];
             //    for (var i = 0; i < data.length; i++) {
@@ -72,7 +72,11 @@ module.exports = {
         combo.render();
         var comboEl = combo.get('input');
         comboEl.on('keyup', function (e) {
-            if (e.which == 38 || e.which == 40) {
+            if (e.which == 38 || e.which == 40 || e.which == 27) {
+                return;
+            }
+            if (e.which == 13) {
+                searchButton.fire('click');
                 return;
             }
             if (comboEl[0].value == '') {
@@ -123,6 +127,19 @@ module.exports = {
             comboEl.fire('blur');
             IO.post(SP.resolvedIOPath('home/get?_content=json'), {
                 q: item.get("textContent"),
+                status: droplist.getSelectedData().value
+            }, function (d) {
+                d = JSONX.decode(d);
+                renderStorys(d);
+                reRenderPage(d);
+                //console.log(account);
+            }, "json");
+        });
+        var searchButton = $('.searchButton');
+        searchButton.unselectable();
+        searchButton.on('click', function () {
+            IO.post(SP.resolvedIOPath('home/get?_content=json'), {
+                q: comboEl[0].value,
                 status: droplist.getSelectedData().value
             }, function (d) {
                 d = JSONX.decode(d);

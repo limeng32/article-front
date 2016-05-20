@@ -11,7 +11,8 @@
         <input style="width:500px;height:100%;" aria-haspopup="true"
                aria-combobox="list" role="combobox" combobox="off"
                class="ks-combobox-input" tabindex="0"
-               id="inp" placeholder=" 多个关键字可用空格分开"
+               id="inp" placeholder=" 多个关键字可用空格分隔"
                 />
     </div>
-</span>
+</span><span class="ks-button searchButton">搜索<img class="searchIcon"
+                                                   src="http://mirage-limeng32.oss-cn-qingdao.aliyuncs.com/system/search.png"></span>

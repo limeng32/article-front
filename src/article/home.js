@@ -34,19 +34,18 @@ module.exports = {
             }, "json");
         }
         var doInit = function (account, p) {
-            console.log(account);
             var selectContainer = new Node('<div>').addClass('selectContainer');
             $('article').append(selectContainer);
             selectContainer.append(new XTemplate(selectTpl).render({}));
             var droplistDataSource = null;
             if (account == null) {
                 droplistDataSource = [
-                    {text: "首页推荐", value: null},
+                    {text: "首页推荐", value: 'gallery'},
                     {text: "全部文章", value: 'p'}
                 ]
             } else {
                 droplistDataSource = [
-                    {text: "首页推荐", value: null},
+                    {text: "首页推荐", value: 'gallery'},
                     {text: "全部文章", value: 'p'},
                     {text: "我的草稿箱", value: 's'},
                     {text: "我的回收站", value: 'c'}

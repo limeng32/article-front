@@ -14,6 +14,7 @@ var PG = require('kg/pagination/2.0.0/index');
 var TIP = require('kg/tooltip/2.2.0/index');
 var DL = require('kg/droplist/2.0.1/index');
 var CB = require('combobox');
+var CBD = require('../callbackDialog/index');
 module.exports = {
     init: function () {
         var ai = new AI(token);
@@ -201,7 +202,16 @@ module.exports = {
                     });
                 }
                 storyContainer.html(html);
-                var tipDelete = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content').html('删除文章')).hide();
+                var tipDelete = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content')).hide();
+                if (droplist.getSelectedData().value == 'p') {
+                    tipDelete.one('.tooltip-content').html('移至回收站');
+                } else if (droplist.getSelectedData().value == 's') {
+                    tipDelete.one('.tooltip-content').html('移至回收站');
+                } else if (droplist.getSelectedData().value == 'c') {
+                    tipDelete.one('.tooltip-content').html('彻底删除');
+                } else if (droplist.getSelectedData().value == 'gallery') {
+                    tipDelete.one('.tooltip-content').html('不可用');
+                }
                 $('article').append(tipDelete);
                 TIP.attach({
                     trigger: '.component-list .delete',      // 用于触发Tooltip出现的节点
@@ -209,7 +219,16 @@ module.exports = {
                     tooltip: tipDelete,      // Tooltip节点
                     position: 'top'          // 可选：默认情况下，Tooltip会根据当前视域进行位置的计算，但是你也可以通过这个属性来强制Tooltip的显示位置，可用值：top,bottom,right,left
                 });
-                var tipPublish = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content').html('发布/取消')).hide();
+                var tipPublish = new Node('<div>').addClass('bubble J_Tooltip').append(new Node('<span>').addClass('J_TooltipArrow arrow-top').append(new Node('<i>'))).append(new Node('<div>').addClass('tooltip-content')).hide();
+                if (droplist.getSelectedData().value == 'p') {
+                    tipPublish.one('.tooltip-content').html('取消发布');
+                } else if (droplist.getSelectedData().value == 's') {
+                    tipPublish.one('.tooltip-content').html('正式发布');
+                } else if (droplist.getSelectedData().value == 'c') {
+                    tipPublish.one('.tooltip-content').html('恢复为草稿');
+                } else if (droplist.getSelectedData().value == 'gallery') {
+                    tipDelete.one('.tooltip-content').html('不可用');
+                }
                 $('article').append(tipPublish);
                 TIP.attach({
                     trigger: '.component-list .publish',      // 用于触发Tooltip出现的节点
@@ -229,27 +248,91 @@ module.exports = {
                 });
                 $('.component-list .delete').on('click', function (e) {
                     var id = new Node(e.target).attr('bind-data');
-                    new AD({
-                        title: '温馨提示',
-                        content: '您确定要删除这篇文章？',
-                        onConfirm: function () {
-                            alert('删除' + id);
-                        },
-                        onCancel: function () {
-                        }
-                    });
+                    if (droplist.getSelectedData().value == 'p') {
+                        new AD({
+                            title: '温馨提示',
+                            content: '您确定要将这篇文章移入回收站？',
+                            onConfirm: function () {
+                                new IO({
+                                    type: 'POST',
+                                    url: SP.resolvedIOPath('home/cancelStory?_content=json'),
+                                    data: {id: id},
+                                    success: function (d) {
+                                        new CBD(d, refreshStory());
+                                    }
+                                });
+                            },
+                            onCancel: function () {
+                            }
+                        });
+                    } else if (droplist.getSelectedData().value == 's') {
+                        new AD({
+                            title: '温馨提示',
+                            content: '您确定要将这篇文章移入回收站？',
+                            onConfirm: function () {
+                                new IO({
+                                    type: 'POST',
+                                    url: SP.resolvedIOPath('home/cancelStory?_content=json'),
+                                    data: {id: id},
+                                    success: function (d) {
+                                        new CBD(d, refreshStory());
+                                    }
+                                });
+                            },
+                            onCancel: function () {
+                            }
+                        });
+                    } else if (droplist.getSelectedData().value == 'c') {
+                        new AD({
+                            title: '温馨提示',
+                            content: '您确定要将这篇文章彻底删除？',
+                            onConfirm: function () {
+                            },
+                            onCancel: function () {
+                            }
+                        });
+                    } else if (droplist.getSelectedData().value == 'gallery') {
+                        new AD({
+                            type: 'alert',
+                            content: '首页推荐期内此功能无法使用'
+                        });
+                    }
                 });
                 $('.component-list .publish').on('click', function (e) {
                     var id = new Node(e.target).attr('bind-data');
-                    new AD({
-                        title: '温馨提示',
-                        content: '您确定要取消这篇文章的发布状态？',
-                        onConfirm: function () {
-                            alert('取消' + id);
-                        },
-                        onCancel: function () {
-                        }
-                    });
+                    if (droplist.getSelectedData().value == 'p') {
+                        new AD({
+                            title: '温馨提示',
+                            content: '您确定要将这篇文章取消发布，移入草稿箱？',
+                            onConfirm: function () {
+                            },
+                            onCancel: function () {
+                            }
+                        });
+                    } else if (droplist.getSelectedData().value == 's') {
+                        new AD({
+                            title: '温馨提示',
+                            content: '您确定要将这篇文章发布？',
+                            onConfirm: function () {
+                            },
+                            onCancel: function () {
+                            }
+                        });
+                    } else if (droplist.getSelectedData().value == 'c') {
+                        new AD({
+                            title: '温馨提示',
+                            content: '您确定要将这篇文章恢复为草稿状态？',
+                            onConfirm: function () {
+                            },
+                            onCancel: function () {
+                            }
+                        });
+                    } else if (droplist.getSelectedData().value == 'gallery') {
+                        new AD({
+                            type: 'alert',
+                            content: '首页推荐期内此功能无法使用'
+                        });
+                    }
                 });
             }
             renderPage(p);
@@ -276,6 +359,18 @@ module.exports = {
                     reRenderPage(d);
                 }, "json");
             });
+            var refreshStory = function () {
+                //console.log()
+                IO.post(SP.resolvedIOPath('home/get?_content=json'), {
+                    pageNo: storyPagination.__attrVals.currentPage,
+                    q: comboEl[0].value,
+                    status: droplist.getSelectedData().value
+                }, function (d) {
+                    d = JSONX.decode(d);
+                    renderStorys(d, account);
+                    reRenderPage2(d);
+                }, "json");
+            }
         }
     }
 }

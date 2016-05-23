@@ -227,7 +227,7 @@ module.exports = {
                 } else if (droplist.getSelectedData().value == 'c') {
                     tipPublish.one('.tooltip-content').html('恢复为草稿');
                 } else if (droplist.getSelectedData().value == 'gallery') {
-                    tipDelete.one('.tooltip-content').html('不可用');
+                    tipPublish.one('.tooltip-content').html('不可用');
                 }
                 $('article').append(tipPublish);
                 TIP.attach({

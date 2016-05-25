@@ -287,6 +287,14 @@ module.exports = {
                             title: '温馨提示',
                             content: '您确定要将这篇文章彻底删除？',
                             onConfirm: function () {
+                                new IO({
+                                    type: 'POST',
+                                    url: SP.resolvedIOPath('home/deleteStory?_content=json'),
+                                    data: {id: id},
+                                    success: function (d) {
+                                        new CBD(d, refreshStory());
+                                    }
+                                });
                             },
                             onCancel: function () {
                             }
@@ -305,6 +313,14 @@ module.exports = {
                             title: '温馨提示',
                             content: '您确定要将这篇文章取消发布，移入草稿箱？',
                             onConfirm: function () {
+                                new IO({
+                                    type: 'POST',
+                                    url: SP.resolvedIOPath('home/unpublishStory?_content=json'),
+                                    data: {id: id},
+                                    success: function (d) {
+                                        new CBD(d, refreshStory());
+                                    }
+                                });
                             },
                             onCancel: function () {
                             }
@@ -314,6 +330,14 @@ module.exports = {
                             title: '温馨提示',
                             content: '您确定要将这篇文章发布？',
                             onConfirm: function () {
+                                new IO({
+                                    type: 'POST',
+                                    url: SP.resolvedIOPath('home/publishStory?_content=json'),
+                                    data: {id: id},
+                                    success: function (d) {
+                                        new CBD(d, refreshStory());
+                                    }
+                                });
                             },
                             onCancel: function () {
                             }
@@ -323,6 +347,14 @@ module.exports = {
                             title: '温馨提示',
                             content: '您确定要将这篇文章恢复为草稿状态？',
                             onConfirm: function () {
+                                new IO({
+                                    type: 'POST',
+                                    url: SP.resolvedIOPath('home/regainStory?_content=json'),
+                                    data: {id: id},
+                                    success: function (d) {
+                                        new CBD(d, refreshStory());
+                                    }
+                                });
                             },
                             onCancel: function () {
                             }

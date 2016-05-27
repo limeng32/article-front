@@ -154,6 +154,7 @@ module.exports = {
         ",ordered-list" +
         ",element-path" +
         ",page-break" +
+        ",preview" +
         ",maximize" +
         ",remove-format" +
         ",heading" +
@@ -311,46 +312,47 @@ module.exports = {
                 url: SP.resolvedIOPath('readStory/get?_content=json'),
                 data: {storyId: storyId},
                 success: function (d) {
-                    d = JSONX.decode(d);
-                    if (d == null) {
+                    if (!d.flag) {
                         new AD({
                             type: 'alert',
-                            content: "您访问的故事并不存在"
+                            content: d.message
                         });
-                    } else if (d.account != null) {
-                        if (ai.existChecked()) {
-                            ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
-                                    if (account == null) {
-                                        new AD({
-                                            type: 'alert',
-                                            content: "您的账号出现问题"
-                                        });
-                                    } else if (account.id == d.account.id) {
-                                        editor.setData(d.storyBucket[0].content);
-                                        contentHidden.getDOMNode().value = d.storyBucket[0].content;
-                                        titleNode.getDOMNode().value = d.title;
-                                        storyHidden.getDOMNode().value = d.id;
-                                    } else {
-                                        new AD({
-                                            type: 'alert',
-                                            content: "您不是这个故事的作者，无法编辑"
-                                        });
-                                    }
-                                }
-                            );
-                        }
                     } else {
-                        new AD({
-                            type: 'alert',
-                            content: "这个故事没有作者，无法编辑"
-                        });
+                        d = JSONX.decode(d.data);
+                        if (d == null) {
+                            new AD({
+                                type: 'alert',
+                                content: "您访问的故事并不存在"
+                            });
+                        } else if (d.account != null) {
+                            if (ai.existChecked()) {
+                                ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
+                                        if (account == null) {
+                                            new AD({
+                                                type: 'alert',
+                                                content: "您的账号出现问题"
+                                            });
+                                        } else if (account.id == d.account.id) {
+                                            editor.setData(d.storyBucket[0].content);
+                                            contentHidden.getDOMNode().value = d.storyBucket[0].content;
+                                            titleNode.getDOMNode().value = d.title;
+                                            storyHidden.getDOMNode().value = d.id;
+                                        } else {
+                                            new AD({
+                                                type: 'alert',
+                                                content: "您不是这个故事的作者，无法编辑"
+                                            });
+                                        }
+                                    }
+                                );
+                            }
+                        } else {
+                            new AD({
+                                type: 'alert',
+                                content: "这个故事没有作者，无法编辑"
+                            });
+                        }
                     }
-                },
-                error: function (n, textStatus, _io) {
-                    new AD({
-                        type: 'alert',
-                        content: textStatus
-                    });
                 }
             });
             //IO.post(SP.resolvedIOPath('readStory/get?_content=json'), {storyId: storyId}, function (d) {
@@ -367,7 +369,7 @@ module.exports = {
                 content: 'asd',
                 visible: true,
                 xy: [50, 100],
-                width:'200px',
+                width: '200px',
                 target: submitButtonContainerMiddle,
                 closeAction: 'hide'
             }

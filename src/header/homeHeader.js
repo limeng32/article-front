@@ -15,7 +15,14 @@ module.exports = {
                 type: 'submit',
                 value: '退出'
             }).addClass('ks-button ks-button-warning ks-button-shown signButton');
-            headerTail.append(signOutButton);
+            var writeStoryButton = new Node('<input>').prop({
+                type: 'submit',
+                value: '开始创作'
+            }).addClass('ks-button ks-button-info ks-button-shown signButton');
+            headerTail.append(writeStoryButton).append(signOutButton);
+            writeStoryButton.on('click', function (e) {
+                window.location.assign(SP.resolvedPath('writeStory'));
+            });
             signOutButton.on('click', function (e) {
                 IO.post(SP.resolvedIOPath('signOut?_content=json'), {}, function (data) {
                     if (data) {

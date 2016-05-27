@@ -155,7 +155,7 @@ module.exports = {
                     status: droplist.getSelectedData().value
                 }, function (d) {
                     d = JSONX.decode(d);
-                    renderStorys(d);
+                    renderStorys(d,account);
                     reRenderPage(d);
                     //console.log(account);
                 }, "json");

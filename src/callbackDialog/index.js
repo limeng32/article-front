@@ -4,17 +4,19 @@ KISSY.add('callbackDialog', ['kg/agiledialog/1.0.2/index'], function (S, require
         if (d != null && d.flag != null) {
             if (d.flag) {
                 if (f1 != null) {
-                    f1();
+                    f1(d);
                 }
             } else {
                 if (f2 != null) {
-                    f2();
+                    f2(d);
                 }
             }
-            new AD({
-                type: 'alert',
-                content: d.message
-            });
+            if (d.message != null) {
+                new AD({
+                    type: 'alert',
+                    content: d.message
+                });
+            }
         }
     }
 });

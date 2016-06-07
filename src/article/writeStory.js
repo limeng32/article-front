@@ -144,8 +144,8 @@ module.exports = {
         ",undo" +
         ",indent" +
         ",outdent" +
-        ",unordered-list" +
-        ",ordered-list" +
+            //",unordered-list" +
+            //",ordered-list" +
         ",element-path" +
         ",page-break" +
         ",preview" +
@@ -171,7 +171,7 @@ module.exports = {
                 max: 5,
                 allowExts: 'jpg,png,gif,bmp,jpeg',
                 allowRepeat: false,
-                maxSize: 1024
+                maxSize: 2048
             },
             type: ["auto"],
             action: SP.resolvedIOPath('uploadFile?_content=json'),
@@ -195,7 +195,7 @@ module.exports = {
                     },
                     suffix: "png,jpg,jpeg,gif",
                     fileInput: "Filedata",
-                    sizeLimit: 1000, //k
+                    sizeLimit: 2000, //k
                     extraHTML: "<p style='margin-top:10px;'><input type='checkbox' id='ke_img_up_watermark_1' checked='checked'> 图片加水印，防止别人盗用</p>"
                 }
             },

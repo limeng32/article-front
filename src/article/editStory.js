@@ -150,8 +150,8 @@ module.exports = {
         ",undo" +
         ",indent" +
         ",outdent" +
-        ",unordered-list" +
-        ",ordered-list" +
+            //",unordered-list" +
+            //",ordered-list" +
         ",element-path" +
         ",page-break" +
         ",preview" +
@@ -177,7 +177,7 @@ module.exports = {
                 max: 5,
                 allowExts: 'jpg,png,gif,bmp,jpeg',
                 allowRepeat: false,
-                maxSize: 1024
+                maxSize: 2048
             },
             type: ["auto"],
             action: SP.resolvedIOPath('uploadFile?_content=json'),

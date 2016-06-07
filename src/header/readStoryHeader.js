@@ -15,13 +15,20 @@ module.exports = {
                 type: 'submit',
                 value: '退出'
             }).addClass('ks-button ks-button-warning ks-button-shown signButton');
-            headerTail.append(signOutButton);
+            var homeButton = new Node('<input>').prop({
+                type: 'submit',
+                value: '回到首页'
+            }).addClass('ks-button ks-button-info ks-button-shown signButton');
+            headerTail.append(homeButton).append(signOutButton);
             signOutButton.on('click', function (e) {
                 IO.post(SP.resolvedIOPath('signOut?_content=json'), {}, function (data) {
                     if (data) {
                         window.location.assign(SP.resolvedPath('.'));
                     }
                 }, 'json');
+            });
+            homeButton.on('click', function (e) {
+                window.location.assign(SP.resolvedPath('home'));
             });
         } else {
             headerMain.html('您好，欢迎来到海市蜃楼');
@@ -33,12 +40,19 @@ module.exports = {
                 type: 'submit',
                 value: '登录'
             }).addClass('ks-button ks-button-shown signButton');
-            headerTail.append(signUpButton).append(signInButton);
+            var homeButton = new Node('<input>').prop({
+                type: 'submit',
+                value: '进来看看'
+            }).addClass('ks-button ks-button-info ks-button-shown signButton');
+            headerTail.append(signUpButton).append(signInButton).append(homeButton);
             signUpButton.on('click', function (e) {
                 window.location.assign(SP.resolvedPath('signUp'));
             });
             signInButton.on('click', function (e) {
                 window.location.assign(SP.resolvedPath('signIn'));
+            });
+            homeButton.on('click', function (e) {
+                window.location.assign(SP.resolvedPath('home'));
             });
         }
         if (ai.existChecked()) {

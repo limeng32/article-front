@@ -174,7 +174,7 @@ module.exports = {
                 maxSize: 2048
             },
             type: ["auto"],
-            action: SP.resolvedIOPath('uploadFile?_content=json'),
+            action: SP.resolvedIOPath('uploadStoryImage?_content=json'),
             autoUpload: true,
             name: 'Filedata',
             listeners: {}

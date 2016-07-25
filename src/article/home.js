@@ -20,7 +20,6 @@ module.exports = {
         var ai = new AI(token);
         if (ai.existChecked()) {
             ai.acquireAccount(SP.resolvedIOPath('getAccount?_content=json'), function (account) {
-                account = JSONX.decode(account);
                 IO.post(SP.resolvedIOPath('home/init?_content=json'), {status: 'p'}, function (d) {
                     d = JSONX.decode(d);
                     var page = d[0];
@@ -155,7 +154,7 @@ module.exports = {
                     status: droplist.getSelectedData().value
                 }, function (d) {
                     d = JSONX.decode(d);
-                    renderStorys(d,account);
+                    renderStorys(d, account);
                     reRenderPage(d);
                     //console.log(account);
                 }, "json");

@@ -16,14 +16,18 @@
                             {{#if( p.pageItems[0].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[0].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[0].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[0].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[0].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[0].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[0].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[0].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[0].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -42,14 +46,18 @@
                             {{#if( p.pageItems[1].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[1].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[1].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[1].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[1].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[1].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[1].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[1].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[1].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -68,14 +76,18 @@
                             {{#if( p.pageItems[2].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[2].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[2].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[2].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[2].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[2].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[2].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[2].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[2].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -94,14 +106,18 @@
                             {{#if( p.pageItems[3].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[3].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[3].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[3].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[3].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[3].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[3].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[3].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[3].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -120,14 +136,18 @@
                             {{#if( p.pageItems[4].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[4].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[4].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[4].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[4].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[4].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[4].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[4].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[4].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -146,14 +166,18 @@
                             {{#if( p.pageItems[5].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[5].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[5].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[5].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[5].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[5].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[5].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[5].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[5].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -172,14 +196,18 @@
                             {{#if( p.pageItems[6].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[6].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[6].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[6].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[6].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[6].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[6].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[6].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[6].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -198,14 +226,18 @@
                             {{#if( p.pageItems[7].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[7].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[7].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[7].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[7].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[7].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[7].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[7].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[7].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -224,14 +256,18 @@
                             {{#if( p.pageItems[8].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[8].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[8].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[8].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[8].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[8].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[8].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[8].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[8].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>
@@ -250,14 +286,18 @@
                             {{#if( p.pageItems[9].account.id === account.id )}}
                             <a class="delete" bind-data="{{p.pageItems[9].id}}"></a>
                             <a class="publish" bind-data="{{p.pageItems[9].id}}"></a>
-                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[9].id)}}" target="_blank"></a>
+                            <a class="edit" href="{{SP.resolvedPath('editStory/' + p.pageItems[9].id)}}"
+                               target="_blank"></a>
                             {{/if}}
                         </div>
                     </div>
                 </a>
             </div>
             <a href="{{SP.resolvedPath('readStory/' + p.pageItems[9].id)}}" target="_blank" class="item-link">
-                <h4 class="name l-block">{{p.pageItems[9].account.name}}</h4>
+                <span class="name"><img src="{{p.pageItems[9].account.accountBucket[0].smallPortrait}}"
+                                        class="smallPortrait">
+                    <span class="smallPortrait-name">{{p.pageItems[9].account.name}}</span>
+                </span>
             </a>
             {{/if}}
         </li>

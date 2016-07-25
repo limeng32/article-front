@@ -19,7 +19,11 @@ module.exports = {
                 type: 'submit',
                 value: '开始创作'
             }).addClass('ks-button ks-button-info ks-button-shown signButton');
-            headerTail.append(writeStoryButton).append(signOutButton);
+            var portraitButton = new Node('<input>').prop({
+                type: 'submit',
+                value: '编辑头像'
+            }).addClass('ks-button ks-button-success ks-button-shown signButton');
+            headerTail.append(portraitButton).append(writeStoryButton).append(signOutButton);
             writeStoryButton.on('click', function (e) {
                 window.location.assign(SP.resolvedPath('writeStory'));
             });
@@ -29,6 +33,9 @@ module.exports = {
                         window.location.assign(SP.resolvedPath('.'));
                     }
                 }, 'json');
+            });
+            portraitButton.on('click', function (e) {
+                window.location.assign(SP.resolvedPath('editUser'));
             });
         } else {
             headerMain.html('您好，欢迎来到海市蜃楼');

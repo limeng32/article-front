@@ -54,3 +54,13 @@ body {
   height: 350px;
   position: relative;
 }
+.smallPortrait {
+  margin-top: 3px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.smallPortrait-name {
+  font-weight: bold;
+  vertical-align: 50%;
+}

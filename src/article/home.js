@@ -2,7 +2,6 @@ var $ = require('node').all;
 var tpl = require('./home-view');
 var selectTpl = require('./homeSelect-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
-var S = KISSY;
 var Node = require('node');
 var SP = require('../smartPath/smartPath');
 var AI = require('../authIdentify/index');
@@ -47,7 +46,7 @@ module.exports = {
                 droplistDataSource = [
                     {text: "首页推荐", value: 'gallery'},
                     {text: "全部文章", value: 'p'},
-                    {text: "我的草稿箱", value: 's'},
+                    {text: "我的草稿箱1", value: 's'},
                     {text: "我的回收站", value: 'c'}
                 ]
             }

@@ -3,17 +3,17 @@ var tpl = require('./home-view');
 var selectTpl = require('./homeSelect-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var Node = require('node');
-var SP = require('../smartPath/smartPath');
-var AI = require('../authIdentify/index');
+var SP = require('core-front/smartPath/smartPath');
+var AI = require('core-front/authIdentify/index');
 var IO = require('io');
 var UA = require('ua');
 var AD = require('kg/agiledialog/1.0.2/index');
-var JSONX = require('../jsonx/jsonx');
+var JSONX = require('core-front/jsonx/jsonx');
 var PG = require('kg/pagination/2.0.0/index');
 var TIP = require('kg/tooltip/2.2.0/index');
 var DL = require('kg/droplist/2.0.1/index');
 var CB = require('combobox');
-var CBD = require('../callbackDialog/index');
+var CBD = require('core-front/callbackDialog/index');
 module.exports = {
     init: function () {
         var ai = new AI(token);
@@ -46,7 +46,7 @@ module.exports = {
                 droplistDataSource = [
                     {text: "首页推荐", value: 'gallery'},
                     {text: "全部文章", value: 'p'},
-                    {text: "我的草稿箱1", value: 's'},
+                    {text: "我的草稿箱", value: 's'},
                     {text: "我的回收站", value: 'c'}
                 ]
             }

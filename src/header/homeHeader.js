@@ -1,9 +1,9 @@
 var $ = require('node').all;
 var Node = require('node');
 var IO = require('io');
-var SP = require('../smartPath/smartPath');
-var AI = require('../authIdentify/index');
-var JSONX = require('../jsonx/jsonx');
+var SP = require('core-front/smartPath/smartPath');
+var AI = require('core-front/authIdentify/index');
+var JSONX = require('core-front/jsonx/jsonx');
 module.exports = {
     init: function () {
         var ai = new AI(token);
